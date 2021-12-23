@@ -22,7 +22,9 @@ def create_app():
     api.add_resource(UserRegistration, '/register')
     api.add_resource(UserLogin, '/auth')
     api.add_resource(UsersResource, '/user')
+    api.add_resource(OrderResource, '/orders', '/orders/<id>')
 
     return app
 
 from app.resources.users_resource import UserRegistration, UserLogin, UsersResource
+from app.resources.orders_resource import OrderResource

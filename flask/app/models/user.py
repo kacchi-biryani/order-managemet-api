@@ -1,8 +1,5 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_marshmallow import Marshmallow
-
-ma = Marshmallow()
 
 class User(db.Model):
     """
@@ -45,20 +42,3 @@ class User(db.Model):
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id = _id).first()
-
-class UserSchema(ma.Schema):
-    """
-    User Marshmallow Schema
-    Marshmallow schema used for loading/dumping Users
-    """
-    class Meta:
-        # Fields to expose
-        fields = ('id', 'name', 'address' ,'email')
-
-    # Smart hyperlinking
-    _links = ma.Hyperlinks(
-        {
-            "self": ma.URLFor("user_detail", values=dict(id="<id>")),
-            "collection": ma.URLFor("users"),
-        }
-    )
