@@ -1,5 +1,3 @@
-from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy_utils import PhoneNumber
 from app.models.user import User
 from app import db
 

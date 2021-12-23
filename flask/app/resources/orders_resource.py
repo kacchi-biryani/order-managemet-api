@@ -1,8 +1,9 @@
+import random
 from flask_restful import Resource, reqparse
-from app.schemas.order_schema import OrderSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models.user import User
 from app.models.order import Order
+from app.schemas.order_schema import OrderSchema
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many=True)
@@ -20,11 +21,6 @@ class OrderResource(Resource):
         help = "this field can't be left blank!"
     )
     parser.add_argument('sender_phone_number', 
-        type =  str,
-        required = True,
-        help = "this field can't be left blank!"
-    )
-    parser.add_argument('order_status', 
         type =  str,
         required = True,
         help = "this field can't be left blank!"
@@ -52,6 +48,9 @@ class OrderResource(Resource):
         data['user_id'] = current_user.id
         data['receiver_address'] = current_user.address
         data['receiver_email'] = email
+        order_status_list = ["Out for delivery", "Processed at warehouse",\
+             "Order picked up"]
+        data['order_status'] = random.choice(order_status_list)
         order = Order(**data)
 
         try:
